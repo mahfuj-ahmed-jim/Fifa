@@ -43,6 +43,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
 
+    // circle imageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // pin view
+    implementation 'com.chaos.view:pinview:1.4.4'
+
 }
 
 apply plugin: 'com.android.application'
