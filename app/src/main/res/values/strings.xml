@@ -2,6 +2,9 @@
 
     <string name="app_name">Fifa Tournament</string>
 
+    <!-- intent -->
+    <string name="activity">activity</string>
+
     <!-- fragment -->
     <string name="logIn">Log In</string>
     <string name="confirmation">Confirmation</string>

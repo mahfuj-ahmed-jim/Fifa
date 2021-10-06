@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".LogInSignIn.LogInFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.11" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.08" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/font"
+        android:gravity="center"
+        android:text="Welcome Back!"
+        android:textColor="@color/white"
+        android:textSize="28dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@+id/guideline1">
+
+    </TextView>
+
+    <TextView
+        android:layout_marginTop="17dp"
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/font"
+        android:gravity="center"
+        android:text="Log in to your account"
+        android:textColor="@color/secondary_text_color"
+        android:textSize="19dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+    </TextView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="34dp"
+        android:id="@+id/linearLayout5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/textView1">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout_id"
+            android:layout_width="0dp"
+            android:layout_height="65dp"
+            android:backgroundTint="#373737"
+            android:gravity="center_vertical"
+            android:hint="Phone number"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="2dp"
+            android:textColorHint="@color/white"
+            app:counterOverflowTextColor="@color/white"
+            app:hintTextColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/layoutId_numberCrossButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.405"
+            tools:ignore="MissingConstraints">
+
+            <EditText
+                android:id="@+id/editTextId_phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_textfield"
+                android:clickable="true"
+                android:focusable="true"
+                android:textSize="20dp"
+                android:focusableInTouchMode="true"
+                android:fontFamily="@font/font"
+                android:gravity="center_vertical"
+                android:paddingRight="42dp"
+                android:singleLine="true"
+                android:textCursorDrawable="@drawable/text_cursor"
+                android:textColor="@color/white">
+
+            </EditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutId_numberCrossButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/buttonId_numberCrossButton"
+                android:visibility="visible"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/button_cross">
+
+            </Button>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout7"
+        android:layout_marginTop="18dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:backgroundTint="#373737"
+            android:gravity="center_vertical"
+            android:hint="Password"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="2dp"
+            android:textColorHint="@color/white"
+            app:counterOverflowTextColor="@color/white"
+            app:hintTextColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.405"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white"
+            tools:ignore="MissingConstraints">
+
+            <EditText
+                android:id="@+id/editTextId_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_textfield"
+                android:clickable="true"
+                android:focusable="true"
+                android:textSize="20dp"
+                android:focusableInTouchMode="true"
+                android:fontFamily="@font/font"
+                android:gravity="center_vertical"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textCursorDrawable="@drawable/text_cursor"
+                android:textColor="@color/white">
+
+            </EditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textViewId_forgetPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/font"
+        android:text="Forget password?"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+
+    </TextView>
+
+    <Button
+        android:id="@+id/buttonId_next"
+        android:layout_marginTop="50dp"
+        android:paddingBottom="5dp"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@drawable/button"
+        android:fontFamily="@font/font"
+        android:text="Log In"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewId_forgetPassword">
+
+    </Button>
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/buttonId_next">
+
+        <TextView
+            android:gravity="center"
+            android:fontFamily="@font/font"
+            android:textSize="15dp"
+            android:textColor="@color/secondary_text_color"
+            android:text="Don't have a account?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/textViewId_signIn"
+            android:gravity="center"
+            android:fontFamily="@font/font"
+            android:textSize="15dp"
+            android:textColor="@color/white"
+            android:text="     Sign In"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
