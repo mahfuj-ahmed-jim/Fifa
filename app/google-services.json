@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "637510920432",
+    "project_id": "fifa-e144a",
+    "storage_bucket": "fifa-e144a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637510920432:android:90ef71ee20c16c931dba35",
+        "android_client_info": {
+          "package_name": "com.ai.fifa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637510920432-137avq2f74oa88h4j1kup3egmcm4hbb6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ai.fifa",
+            "certificate_hash": "99e4f65ae302a77a8a4002609be184bba3984c0b"
+          }
+        },
+        {
+          "client_id": "637510920432-l5khre5nmkrcuanu55gr3cckdegdnqdh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2ne2zARrT6cAVHnz8a6H05luefYt8-ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637510920432-l5khre5nmkrcuanu55gr3cckdegdnqdh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
