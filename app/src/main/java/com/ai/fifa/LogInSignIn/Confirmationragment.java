@@ -1,7 +1,9 @@
 package com.ai.fifa.LogInSignIn;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -14,6 +16,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ai.fifa.R;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
+import com.google.firebase.auth.PhoneAuthProvider;
+
+import java.util.concurrent.TimeUnit;
 
 public class Confirmationragment extends Fragment {
 
@@ -26,8 +35,12 @@ public class Confirmationragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    // firebase
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack; // send otp
+    private FirebaseAuth firebaseAuth;
+
     // button
-    private Button backButton;
+    private Button backButton, nextButton;
 
     // edit text
     private EditText numberEditText;
@@ -65,8 +78,11 @@ public class Confirmationragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_confirmationragment, container, false);
 
+        firebaseAuth = FirebaseAuth.getInstance(); // initialize firebase
+
         // buttons
         backButton = view.findViewById(R.id.buttonId_back);
+        nextButton = view.findViewById(R.id.buttonId_next);
 
         // edit text
         numberEditText = view.findViewById(R.id.editTextId_phoneNumber);
@@ -74,6 +90,25 @@ public class Confirmationragment extends Fragment {
         // cross button for edit text
         crossButtonLayout = view.findViewById(R.id.layoutId_numberCrossButton);
         crossButton = view.findViewById(R.id.buttonId_numberCrossButton);
+
+        mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            @Override
+            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                // instant verification
+                // no need to send the code
+            }
+
+            @Override
+            public void onVerificationFailed(@NonNull FirebaseException e) {
+
+            }
+
+            @Override
+            public void onCodeSent(@NonNull String verifyCode, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                super.onCodeSent(verifyCode, forceResendingToken);
+
+            }
+        };
 
         numberEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -108,6 +143,34 @@ public class Confirmationragment extends Fragment {
             }
         });
 
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(numberEditText.getText().toString().trim().isEmpty()){
+                    numberEditText.setError("Fill up the number");
+                }else{
+
+                    String number = numberEditText.getText().toString().trim();
+
+                    //manipulate values
+                    if(number.contains("+880")){
+                        number = number.substring(4);
+                    }
+                    if(number.charAt(0)=='0' && number.length() == 11){
+                        number = number.substring(1);
+                    }
+                    //end
+
+                    number = "+880"+number;
+
+                    startPhoneNumberVerification(number);
+
+                }
+
+            }
+        });
+
         // cross button
         crossButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,4 +188,15 @@ public class Confirmationragment extends Fragment {
 
         return view;
     }
+
+    private void startPhoneNumberVerification(String number) {
+        PhoneAuthOptions options = PhoneAuthOptions.newBuilder(firebaseAuth)
+                .setPhoneNumber(number) // set phone number
+                .setTimeout(60L, TimeUnit.SECONDS) // set timer for submit the code
+                .setActivity(getActivity())
+                .setCallbacks(mCallBack) // call back action
+                .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
+    }
+
 }
