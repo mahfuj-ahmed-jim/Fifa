@@ -36,6 +36,7 @@
         app:layout_constraintGuide_percent="0.10" />
 
     <Button
+        android:id="@+id/buttonId_back"
         android:background="@drawable/button_back"
         android:layout_width="52dp"
         android:layout_height="52dp"
@@ -111,12 +112,13 @@
                 tools:ignore="MissingConstraints">
 
                 <EditText
-                    android:id="@+id/editTextId_email"
+                    android:id="@+id/editTextId_phoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/background_textfield"
                     android:clickable="true"
                     android:focusable="true"
+                    android:inputType="number"
                     android:focusableInTouchMode="true"
                     android:fontFamily="@font/font"
                     android:gravity="center_vertical"
@@ -132,6 +134,7 @@
 
             <LinearLayout
                 android:id="@+id/layoutId_numberCrossButton"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
