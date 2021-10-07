@@ -1,13 +1,16 @@
 package com.ai.fifa.LogInSignIn;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +19,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ai.fifa.R;
+import com.chaos.view.PinView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -38,16 +46,25 @@ public class Confirmationragment extends Fragment {
     // firebase
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack; // send otp
     private FirebaseAuth firebaseAuth;
+    private String verifyCode; // will hold otp to verify
 
     // button
     private Button backButton, nextButton;
 
     // edit text
+    private ConstraintLayout numberEditTextLayout;
     private EditText numberEditText;
+
+    // pinView
+    private PinView pinView;
 
     // cross button for edit text
     private LinearLayout crossButtonLayout;
     private Button crossButton;
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
+    }
 
     public Confirmationragment() {
         // Required empty public constructor
@@ -85,7 +102,11 @@ public class Confirmationragment extends Fragment {
         nextButton = view.findViewById(R.id.buttonId_next);
 
         // edit text
+        numberEditTextLayout = view.findViewById(R.id.constraintLayoutId_textField);
         numberEditText = view.findViewById(R.id.editTextId_phoneNumber);
+
+        // pinView
+        pinView = view.findViewById(R.id.pinViewId);
 
         // cross button for edit text
         crossButtonLayout = view.findViewById(R.id.layoutId_numberCrossButton);
@@ -96,16 +117,23 @@ public class Confirmationragment extends Fragment {
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
                 // instant verification
                 // no need to send the code
+                Log.d("Verify", "Verified");
             }
 
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
+                Log.d("Verify", e.getMessage());
+
+                //We have blocked all requests from this device due to unusual activity. Try again later.
 
             }
 
             @Override
             public void onCodeSent(@NonNull String verifyCode, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                 super.onCodeSent(verifyCode, forceResendingToken);
+
+                setVerifyCode(verifyCode);
+                changeButtonForOtp();
 
             }
         };
@@ -147,24 +175,38 @@ public class Confirmationragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(numberEditText.getText().toString().trim().isEmpty()){
-                    numberEditText.setError("Fill up the number");
+                if(nextButton.getText().equals("Send Code")){
+
+                    if(numberEditText.getText().toString().trim().isEmpty()){
+                        numberEditText.setError("Fill up the number");
+                    }else{
+
+                        String number = numberEditText.getText().toString().trim();
+
+                        //manipulate values
+                        if(number.contains("+880")){
+                            number = number.substring(4);
+                        }
+                        if(number.charAt(0)=='0' && number.length() == 11){
+                            number = number.substring(1);
+                        }
+                        //end
+
+                        number = "+880"+number;
+
+                        Log.d("Verify", number);
+
+                        startPhoneNumberVerification(number);
+
+                    }
+
                 }else{
 
-                    String number = numberEditText.getText().toString().trim();
-
-                    //manipulate values
-                    if(number.contains("+880")){
-                        number = number.substring(4);
+                    try{
+                        verifyWithCode(verifyCode, pinView.getText().toString());
+                    }catch (Exception e){
+                        Log.d("Verify", e.getMessage());
                     }
-                    if(number.charAt(0)=='0' && number.length() == 11){
-                        number = number.substring(1);
-                    }
-                    //end
-
-                    number = "+880"+number;
-
-                    startPhoneNumberVerification(number);
 
                 }
 
@@ -189,6 +231,15 @@ public class Confirmationragment extends Fragment {
         return view;
     }
 
+    private void changeButtonForOtp() {
+
+        numberEditTextLayout.setVisibility(View.GONE);
+        pinView.setVisibility(View.VISIBLE);
+
+        nextButton.setText("Next");
+
+    }
+
     private void startPhoneNumberVerification(String number) {
         PhoneAuthOptions options = PhoneAuthOptions.newBuilder(firebaseAuth)
                 .setPhoneNumber(number) // set phone number
@@ -197,6 +248,33 @@ public class Confirmationragment extends Fragment {
                 .setCallbacks(mCallBack) // call back action
                 .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
+    }
+
+    private void verifyWithCode(String verifyCode, String code){
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verifyCode, code);
+        try{
+            signInWithPhoneAuthCredential(credential);
+        }catch (Exception e){
+            Log.d("Verify", e.getMessage().toString());
+        }
+    }
+
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential){
+        // if the code works successfully
+        firebaseAuth.signInWithCredential(credential).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                Log.d("Verify", "Verified Successful");
+            }
+        });
+        // if the code doesn't works
+        firebaseAuth.signInWithCredential(credential).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Verify", "Verified failed");
+            }
+        });
     }
 
 }
