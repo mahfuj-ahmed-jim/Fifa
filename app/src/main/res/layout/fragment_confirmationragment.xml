@@ -7,199 +7,371 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".LogInSignIn.Confirmationragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.11" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.04" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.96" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
-
-    <Button
-        android:id="@+id/buttonId_back"
-        android:background="@drawable/button_back"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </Button>
-
-    <TextView
-        android:id="@+id/textViewId_title"
-        android:paddingHorizontal="25dp"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/font"
-        android:gravity="center"
-        android:text="Enter Your Phone number"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@+id/guideline1">
-
-    </TextView>
-
-    <TextView
-        android:layout_marginTop="20dp"
-        android:id="@+id/textViewId_text"
-        android:paddingHorizontal="25dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/font"
-        android:gravity="center"
-        android:text="Enter the mobile number where you can be reached. You can hide this from your profile later."
-        android:textColor="@color/secondary_text_color"
-        android:textSize="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/textViewId_title">
-
-    </TextView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout5"
-        android:layout_marginTop="60dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/textViewId_text">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutId_textField"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout_id"
-                android:layout_width="0dp"
-                android:layout_height="65dp"
-                android:backgroundTint="#373737"
-                android:gravity="center_vertical"
-                android:hint="Phone number"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingRight="15dp"
-                android:paddingBottom="2dp"
-                android:textColorHint="@color/white"
-                app:counterOverflowTextColor="@color/white"
-                app:hintTextColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/layoutId_numberCrossButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.405"
-                tools:ignore="MissingConstraints">
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.11" />
 
-                <EditText
-                    android:id="@+id/editTextId_phoneNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/background_textfield"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:inputType="number"
-                    android:focusableInTouchMode="true"
-                    android:fontFamily="@font/font"
-                    android:gravity="center_vertical"
-                    android:paddingRight="42dp"
-                    android:singleLine="true"
-                    android:textColor="@color/white"
-                    android:textCursorDrawable="@drawable/text_cursor"
-                    android:textSize="20dp">
-
-                </EditText>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutId_numberCrossButton"
-                android:visibility="gone"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:gravity="center"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintGuide_percent="0.04" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.96" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.10" />
+
+            <Button
+                android:id="@+id/buttonId_back"
+                android:background="@drawable/button_back"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="6dp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <Button
-                    android:id="@+id/buttonId_numberCrossButton"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:background="@drawable/button_cross"
-                    android:visibility="visible">
+            </Button>
 
-                </Button>
+            <TextView
+                android:id="@+id/textViewId_title"
+                android:paddingHorizontal="25dp"
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font"
+                android:gravity="center"
+                android:text="What's your name?"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@+id/guideline1">
 
-            </LinearLayout>
+            </TextView>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:id="@+id/textViewId_text"
+                android:paddingHorizontal="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font"
+                android:gravity="center"
+                android:text="Enter the name you use in real life"
+                android:textColor="@color/secondary_text_color"
+                android:textSize="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/textViewId_title">
+
+            </TextView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout5"
+                android:layout_marginTop="60dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/textViewId_text">
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutId_name"
+                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayoutId_textField1"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputLayout_id1"
+                            android:layout_width="0dp"
+                            android:layout_height="65dp"
+                            android:backgroundTint="#373737"
+                            android:gravity="center_vertical"
+                            android:hint="First Name"
+                            android:paddingLeft="15dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="15dp"
+                            android:paddingBottom="2dp"
+                            android:textColorHint="@color/white"
+                            app:counterOverflowTextColor="@color/white"
+                            app:hintTextColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/layoutId_firstNameCrossButton"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.405"
+                            tools:ignore="MissingConstraints">
+
+                            <EditText
+                                android:id="@+id/editTextId_firstName"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_textfield"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:fontFamily="@font/font"
+                                android:gravity="center_vertical"
+                                android:paddingRight="42dp"
+                                android:singleLine="true"
+                                android:textColor="@color/white"
+                                android:textCursorDrawable="@drawable/text_cursor"
+                                android:textSize="20dp">
+
+                            </EditText>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutId_firstNameCrossButton"
+                            android:visibility="gone"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="w,1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <Button
+                                android:id="@+id/buttonId_firstNameCrossButton"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:background="@drawable/button_cross"
+                                android:visibility="visible">
+
+                            </Button>
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayoutId_textField11"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputLayout_id11"
+                            android:layout_width="0dp"
+                            android:layout_height="65dp"
+                            android:backgroundTint="#373737"
+                            android:gravity="center_vertical"
+                            android:hint="Last Name"
+                            android:paddingLeft="15dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="15dp"
+                            android:paddingBottom="2dp"
+                            android:textColorHint="@color/white"
+                            app:counterOverflowTextColor="@color/white"
+                            app:hintTextColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/layoutId_lastNameCrossButton"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.405"
+                            tools:ignore="MissingConstraints">
+
+                            <EditText
+                                android:id="@+id/editTextId_lastName"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_textfield"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:fontFamily="@font/font"
+                                android:gravity="center_vertical"
+                                android:paddingRight="42dp"
+                                android:singleLine="true"
+                                android:textColor="@color/white"
+                                android:textCursorDrawable="@drawable/text_cursor"
+                                android:textSize="20dp">
+
+                            </EditText>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutId_lastNameCrossButton"
+                            android:visibility="gone"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="w,1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <Button
+                                android:id="@+id/buttonId_lastNameCrossButton"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:background="@drawable/button_cross"
+                                android:visibility="visible">
+
+                            </Button>
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutId_textField"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayout_id"
+                        android:layout_width="0dp"
+                        android:layout_height="65dp"
+                        android:backgroundTint="#373737"
+                        android:gravity="center_vertical"
+                        android:hint="Phone number"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="2dp"
+                        android:textColorHint="@color/white"
+                        app:counterOverflowTextColor="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/layoutId_numberCrossButton"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.405"
+                        tools:ignore="MissingConstraints">
+
+                        <EditText
+                            android:id="@+id/editTextId_phoneNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/background_textfield"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:inputType="number"
+                            android:focusableInTouchMode="true"
+                            android:fontFamily="@font/font"
+                            android:gravity="center_vertical"
+                            android:paddingRight="42dp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textCursorDrawable="@drawable/text_cursor"
+                            android:textSize="20dp">
+
+                        </EditText>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutId_numberCrossButton"
+                        android:visibility="gone"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="w,1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <Button
+                            android:id="@+id/buttonId_numberCrossButton"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:background="@drawable/button_cross"
+                            android:visibility="visible">
+
+                        </Button>
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.chaos.view.PinView
+                    android:id="@+id/pinViewId"
+                    android:visibility="gone"
+                    style="@style/PinWidget.PinView"
+                    android:layout_marginTop="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="true"
+                    android:fontFamily="@font/font"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:textColor="@color/white"
+                    app:itemCount="6"
+                    app:itemHeight="40dp"
+                    app:itemRadius="10dp"
+                    app:itemSpacing="12dp"
+                    app:itemWidth="40dp"
+                    app:lineWidth="2dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:lineColor="@color/white"
+                    tools:ignore="MissingConstraints">
+
+                </com.chaos.view.PinView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/buttonId_next"
+                android:layout_marginTop="80dp"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/font"
+                android:paddingBottom="5dp"
+                android:text="Enter your name"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+            </Button>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.chaos.view.PinView
-            android:id="@+id/pinViewId"
-            android:visibility="gone"
-            style="@style/PinWidget.PinView"
-            android:layout_marginTop="25dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:cursorVisible="true"
-            android:fontFamily="@font/font"
-            android:gravity="center"
-            android:inputType="number"
-            android:textColor="@color/white"
-            app:itemCount="6"
-            app:itemHeight="40dp"
-            app:itemRadius="10dp"
-            app:itemSpacing="12dp"
-            app:itemWidth="40dp"
-            app:lineWidth="2dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:lineColor="@color/white"
-            tools:ignore="MissingConstraints">
-
-        </com.chaos.view.PinView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/buttonId_next"
-        android:layout_marginTop="80dp"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:background="@drawable/button"
-        android:fontFamily="@font/font"
-        android:paddingBottom="5dp"
-        android:text="Send Code"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
-
-    </Button>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

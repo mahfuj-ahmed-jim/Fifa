@@ -17,7 +17,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.ai.fifa.Activities.IOnBackPressed;
+import com.ai.fifa.Database.User.User;
 import com.ai.fifa.R;
 import com.chaos.view.PinView;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,7 +35,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
-public class Confirmationragment extends Fragment {
+public class Confirmationragment extends Fragment implements IOnBackPressed {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,6 +46,9 @@ public class Confirmationragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    // user
+    private User user = new User();
+
     // firebase
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack; // send otp
     private FirebaseAuth firebaseAuth;
@@ -52,15 +58,16 @@ public class Confirmationragment extends Fragment {
     private Button backButton, nextButton;
 
     // edit text
+    private LinearLayout nameEditTextLayout;
     private ConstraintLayout numberEditTextLayout;
-    private EditText numberEditText;
+    private EditText firstNameEditText, lastNameEditText, numberEditText;
 
     // pinView
     private PinView pinView;
 
     // cross button for edit text
-    private LinearLayout crossButtonLayout;
-    private Button crossButton;
+    private LinearLayout firstNameCrossButtonLayout, lastNameCrossButtonLayout, crossButtonLayout;
+    private Button firstNameCrossButton, lastNameCrossButton, crossButton;
 
     public void setVerifyCode(String verifyCode) {
         this.verifyCode = verifyCode;
@@ -102,14 +109,21 @@ public class Confirmationragment extends Fragment {
         nextButton = view.findViewById(R.id.buttonId_next);
 
         // edit text
+        nameEditTextLayout = view.findViewById(R.id.linearLayoutId_name);
         numberEditTextLayout = view.findViewById(R.id.constraintLayoutId_textField);
+        firstNameEditText = view.findViewById(R.id.editTextId_firstName);
+        lastNameEditText = view.findViewById(R.id.editTextId_lastName);
         numberEditText = view.findViewById(R.id.editTextId_phoneNumber);
 
         // pinView
         pinView = view.findViewById(R.id.pinViewId);
 
         // cross button for edit text
+        firstNameCrossButtonLayout = view.findViewById(R.id.layoutId_firstNameCrossButton);
+        lastNameCrossButtonLayout = view.findViewById(R.id.layoutId_lastNameCrossButton);
         crossButtonLayout = view.findViewById(R.id.layoutId_numberCrossButton);
+        firstNameCrossButton = view.findViewById(R.id.buttonId_firstNameCrossButton);
+        lastNameCrossButton = view.findViewById(R.id.buttonId_lastNameCrossButton);
         crossButton = view.findViewById(R.id.buttonId_numberCrossButton);
 
         mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -137,6 +151,56 @@ public class Confirmationragment extends Fragment {
 
             }
         };
+
+        firstNameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // hide the cross button when edit text is empty
+                // easy to erase the text for the user
+                if(firstNameEditText.getText().toString().trim().isEmpty()){
+                    firstNameCrossButtonLayout.setVisibility(View.GONE);
+                }else{
+                    firstNameCrossButtonLayout.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        lastNameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // hide the cross button when edit text is empty
+                // easy to erase the text for the user
+                if(lastNameEditText.getText().toString().trim().isEmpty()){
+                    lastNameCrossButtonLayout.setVisibility(View.GONE);
+                }else{
+                    lastNameCrossButtonLayout.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         numberEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -175,7 +239,26 @@ public class Confirmationragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(nextButton.getText().equals("Send Code")){
+                if(nextButton.getText().equals("Enter your name")){
+
+                    if(firstNameEditText.getText().toString().trim().isEmpty()){
+
+                        firstNameEditText.setError("First Name");
+
+                    }else if(lastNameEditText.getText().toString().trim().isEmpty()){
+
+                        lastNameEditText.setError("Last Name");
+
+                    }else{
+
+                        user.setFirstName(firstNameEditText.getText().toString().trim());
+                        user.setLastName(lastNameEditText.getText().toString().trim());
+
+                        changeButtonForNumber();
+
+                    }
+
+                }else if(nextButton.getText().equals("Send Code")){
 
                     if(numberEditText.getText().toString().trim().isEmpty()){
                         numberEditText.setError("Fill up the number");
@@ -214,6 +297,34 @@ public class Confirmationragment extends Fragment {
         });
 
         // cross button
+        firstNameCrossButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstNameEditText.setText("");
+            }
+        });
+
+        firstNameCrossButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstNameEditText.setText("");
+            }
+        });
+
+        lastNameCrossButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lastNameEditText.setText("");
+            }
+        });
+
+        lastNameCrossButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lastNameEditText.setText("");
+            }
+        });
+
         crossButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,8 +342,29 @@ public class Confirmationragment extends Fragment {
         return view;
     }
 
+    private void changeButtonForName() {
+
+        nameEditTextLayout.setVisibility(View.VISIBLE);
+        numberEditTextLayout.setVisibility(View.GONE);
+        pinView.setVisibility(View.GONE);
+
+        nextButton.setText("Enter your name");
+
+    }
+
+    private void changeButtonForNumber() {
+
+        nameEditTextLayout.setVisibility(View.GONE);
+        numberEditTextLayout.setVisibility(View.VISIBLE);
+        pinView.setVisibility(View.GONE);
+
+        nextButton.setText("Send Code");
+
+    }
+
     private void changeButtonForOtp() {
 
+        nameEditTextLayout.setVisibility(View.GONE);
         numberEditTextLayout.setVisibility(View.GONE);
         pinView.setVisibility(View.VISIBLE);
 
@@ -275,6 +407,27 @@ public class Confirmationragment extends Fragment {
                 Log.d("Verify", "Verified failed");
             }
         });
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (nextButton.getText().equals("Send Code")) {
+
+            //action not popBackStack
+            changeButtonForName();
+            return true;
+
+        } else if(nextButton.getText().equals("Next")){
+
+            //action not popBackStack
+            changeButtonForNumber();
+            return true;
+
+        }else {
+
+            return false;
+
+        }
     }
 
 }
