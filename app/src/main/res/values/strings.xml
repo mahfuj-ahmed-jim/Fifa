@@ -2,6 +2,15 @@
 
     <string name="app_name">Fifa</string>
 
+    <!-- shared preference -->
+    <string name="userInformation">userInformation</string>
+    <string name="userData">userData</string>
+    <string name="userId">userId</string>
+    <string name="firstName">firstName</string>
+    <string name="lastName">lastName</string>
+    <string name="phoneNumber">phoneNumber</string>
+    <string name="password">password</string>
+
     <!-- intent -->
     <string name="activity">activity</string>
 

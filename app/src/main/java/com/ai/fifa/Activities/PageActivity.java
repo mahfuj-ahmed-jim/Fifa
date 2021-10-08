@@ -7,7 +7,6 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -15,7 +14,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.ai.fifa.LogInSignIn.LogInFragment;
+import com.ai.fifa.Authentication.LogInFragment;
 import com.ai.fifa.R;
 
 public class PageActivity extends AppCompatActivity {

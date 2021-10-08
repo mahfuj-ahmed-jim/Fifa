@@ -1,7 +1,8 @@
-package com.ai.fifa.LogInSignIn;
+package com.ai.fifa.Authentication;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.ai.fifa.Activities.IOnBackPressed;
 import com.ai.fifa.Database.User.User;
@@ -28,12 +29,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.TimeUnit;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Confirmationragment extends Fragment implements IOnBackPressed {
 
@@ -49,18 +53,26 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
     // user
     private User user = new User();
 
+    // shared preference
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+
     // firebase
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack; // send otp
     private FirebaseAuth firebaseAuth;
-    private String verifyCode; // will hold otp to verify
+    private String verifyCode; // will hold otp to verify// Firebase
+    private DatabaseReference databaseReference;
+
+    // header
+    private TextView titleTextView, textView;
 
     // button
     private Button backButton, nextButton;
 
     // edit text
     private LinearLayout nameEditTextLayout;
-    private ConstraintLayout numberEditTextLayout;
-    private EditText firstNameEditText, lastNameEditText, numberEditText;
+    private ConstraintLayout numberEditTextLayout, passwordEditTextLayout;
+    private EditText firstNameEditText, lastNameEditText, numberEditText, passwordEditText;
 
     // pinView
     private PinView pinView;
@@ -102,7 +114,16 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_confirmationragment, container, false);
 
+        // firebase
         firebaseAuth = FirebaseAuth.getInstance(); // initialize firebase
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
+        //init shared Preference
+        preferences = getActivity().getSharedPreferences(String.valueOf(R.string.userInformation), MODE_PRIVATE);
+
+        // header
+        titleTextView = view.findViewById(R.id.textViewId_title);
+        textView = view.findViewById(R.id.textViewId_text);
 
         // buttons
         backButton = view.findViewById(R.id.buttonId_back);
@@ -111,9 +132,11 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
         // edit text
         nameEditTextLayout = view.findViewById(R.id.linearLayoutId_name);
         numberEditTextLayout = view.findViewById(R.id.constraintLayoutId_textField);
+        passwordEditTextLayout = view.findViewById(R.id.constraintLayoutId_textField3);
         firstNameEditText = view.findViewById(R.id.editTextId_firstName);
         lastNameEditText = view.findViewById(R.id.editTextId_lastName);
         numberEditText = view.findViewById(R.id.editTextId_phoneNumber);
+        passwordEditText = view.findViewById(R.id.editTextId_password);
 
         // pinView
         pinView = view.findViewById(R.id.pinViewId);
@@ -279,16 +302,33 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
 
                         Log.d("Verify", number);
 
-                        startPhoneNumberVerification(number);
+                        try{
+                            startPhoneNumberVerification(number);
+                        }catch (Exception e){
+                            Log.d("Verify", e.getMessage());
+                        }
 
                     }
 
-                }else{
+                }else if(nextButton.getText().equals("Next")){
 
                     try{
                         verifyWithCode(verifyCode, pinView.getText().toString());
                     }catch (Exception e){
                         Log.d("Verify", e.getMessage());
+                    }
+
+                }else{
+
+                    if(passwordEditText.getText().toString().length() < 6){
+
+                        passwordEditText.setError("at least 6 character");
+
+                    }else{
+
+                        user.setPassword(passwordEditText.getText().toString());
+                        saveToDatabase();
+
                     }
 
                 }
@@ -347,7 +387,10 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
         nameEditTextLayout.setVisibility(View.VISIBLE);
         numberEditTextLayout.setVisibility(View.GONE);
         pinView.setVisibility(View.GONE);
+        passwordEditTextLayout.setVisibility(View.GONE);
 
+        titleTextView.setText("What's your name?");
+        textView.setText("Enter the name you use in real life");
         nextButton.setText("Enter your name");
 
     }
@@ -357,7 +400,10 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
         nameEditTextLayout.setVisibility(View.GONE);
         numberEditTextLayout.setVisibility(View.VISIBLE);
         pinView.setVisibility(View.GONE);
+        passwordEditTextLayout.setVisibility(View.GONE);
 
+        titleTextView.setText("Enter your mobile number");
+        textView.setText("Enter the mobile number where you can be reached. You can hide this from your profile later");
         nextButton.setText("Send Code");
 
     }
@@ -367,8 +413,42 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
         nameEditTextLayout.setVisibility(View.GONE);
         numberEditTextLayout.setVisibility(View.GONE);
         pinView.setVisibility(View.VISIBLE);
+        passwordEditTextLayout.setVisibility(View.GONE);
 
+        titleTextView.setText("Choose a password");
+        textView.setText("Create a password with at least 6 characters. It should be something others couldn't guess");
         nextButton.setText("Next");
+
+    }
+
+    private void changeButtonForPassword() {
+
+        nameEditTextLayout.setVisibility(View.GONE);
+        numberEditTextLayout.setVisibility(View.GONE);
+        pinView.setVisibility(View.GONE);
+        passwordEditTextLayout.setVisibility(View.VISIBLE);
+
+        nextButton.setText("Set Password");
+
+    }
+
+    private void saveToDatabase(){
+
+        user.setUserId(firebaseAuth.getCurrentUser().getUid()); // get firebase unique id
+
+        // add data to shared preference to start the apps from the main activity next time
+        preferences = getActivity().getSharedPreferences(String.valueOf(R.string.userData), Context.MODE_PRIVATE); // initialize the shared preference
+        editor = preferences.edit();
+
+        editor.putString(String.valueOf(R.string.userId), user.getUserId()); // write first name
+        editor.putString(String.valueOf(R.string.firstName), user.getFirstName()); // write first name
+        editor.putString(String.valueOf(R.string.lastName), user.getLastName()); // write last name
+        editor.putString(String.valueOf(R.string.phoneNumber), user.getPhoneNumber()); // write last name
+        editor.putString(String.valueOf(R.string.password), user.getPassword()); // write password
+
+        editor.commit(); // write to shared preference
+
+        databaseReference.child(user.getUserId()).setValue(user); // set the object info in real time database
 
     }
 
@@ -397,14 +477,15 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onSuccess(AuthResult authResult) {
-                Log.d("Verify", "Verified Successful");
+                user.setPhoneNumber("+880"+numberEditText.getText().toString().trim());
+                changeButtonForPassword();
             }
         });
         // if the code doesn't works
         firebaseAuth.signInWithCredential(credential).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("Verify", "Verified failed");
+                Log.d("Verify", e.getMessage());
             }
         });
     }
@@ -418,6 +499,12 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
             return true;
 
         } else if(nextButton.getText().equals("Next")){
+
+            //action not popBackStack
+            changeButtonForNumber();
+            return true;
+
+        }else if(nextButton.getText().equals("Set Password")){
 
             //action not popBackStack
             changeButtonForNumber();

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".LogInSignIn.Confirmationragment">
+    tools:context=".Authentication.Confirmationragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -349,6 +349,59 @@
                     tools:ignore="MissingConstraints">
 
                 </com.chaos.view.PinView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutId_textField3"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayout_id3"
+                        android:layout_width="0dp"
+                        android:layout_height="65dp"
+                        android:backgroundTint="#373737"
+                        android:gravity="center_vertical"
+                        android:hint="Password"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="2dp"
+                        android:textColorHint="@color/white"
+                        app:counterOverflowTextColor="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.405"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="@color/white"
+                        tools:ignore="MissingConstraints">
+
+                        <EditText
+                            android:id="@+id/editTextId_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/background_textfield"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:inputType="textPassword"
+                            android:focusableInTouchMode="true"
+                            android:fontFamily="@font/font"
+                            android:gravity="center_vertical"
+                            android:paddingRight="42dp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textCursorDrawable="@drawable/text_cursor"
+                            android:textSize="20dp">
+
+                        </EditText>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

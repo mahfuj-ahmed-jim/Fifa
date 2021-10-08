@@ -1,4 +1,4 @@
-package com.ai.fifa.LogInSignIn;
+package com.ai.fifa.Authentication;
 
 import android.os.Bundle;
 
