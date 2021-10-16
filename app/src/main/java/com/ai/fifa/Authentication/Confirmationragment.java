@@ -1,7 +1,6 @@
 package com.ai.fifa.Authentication;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -53,10 +52,6 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
 
     // user
     private User user = new User();
-
-    // shared preference
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor editor;
 
     // firebase
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack; // send otp
@@ -118,9 +113,6 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
         // firebase
         firebaseAuth = FirebaseAuth.getInstance(); // initialize firebase
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
-        //init shared Preference
-        preferences = getActivity().getSharedPreferences(String.valueOf(R.string.userInformation), MODE_PRIVATE);
 
         // header
         titleTextView = view.findViewById(R.id.textViewId_title);

@@ -1,6 +1,7 @@
 package com.ai.fifa.Database.SharedPreference;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.ai.fifa.Database.User.User;
@@ -10,16 +11,16 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class UserSharePreference {
 
-    private Activity activity;
+    private Context context;
     private User user = new User();
 
     // shared preference
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
-    public UserSharePreference(Activity activity) {
-        this.activity = activity;
-        this.preferences = activity.getSharedPreferences(String.valueOf(R.string.userInformation), MODE_PRIVATE); //initialize shared Preference
+    public UserSharePreference(Context context) {
+        this.context = context;
+        this.preferences = context.getSharedPreferences(String.valueOf(R.string.userInformation), MODE_PRIVATE); //initialize shared Preference
     }
 
     public void setData(User user){
@@ -39,6 +40,7 @@ public class UserSharePreference {
 
     public User getData(){
 
+        // start
         if(preferences.contains(String.valueOf(R.string.firstName))){ // read from shared preference
 
             String firstName = preferences.getString(String.valueOf(R.string.firstName), null);
@@ -47,17 +49,24 @@ public class UserSharePreference {
             String phoneNumber = preferences.getString(String.valueOf(R.string.phoneNumber), null);
             String password = preferences.getString(String.valueOf(R.string.password), null);
 
+            // start
             if(userId != null){
-
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
                 user.setUserId(userId);
                 user.setPhoneNumber(phoneNumber);
                 user.setPassword(password);
-
+            }else{
+                user.setUserId(null);
             }
+            // end
+
+        }else{
+
+            user.setUserId(null);
 
         }
+        // end
 
         return this.user;
 
