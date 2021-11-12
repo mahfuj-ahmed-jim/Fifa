@@ -276,17 +276,19 @@
 
                 </TextView>
 
-                <TextView
-                    android:id="@+id/textViewId_signIn"
+                <Button
+                    android:id="@+id/buttonId_signIn"
                     android:gravity="center"
+                    android:background="@android:color/transparent"
+                    android:textAllCaps="false"
                     android:fontFamily="@font/font"
                     android:textSize="18dp"
                     android:textColor="@color/white"
-                    android:text="    Sign In"
+                    android:text="Sign In"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                </TextView>
+                </Button>
 
             </LinearLayout>
             <!-- for sign in -->

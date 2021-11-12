@@ -4,6 +4,7 @@
     <!-- basic color -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="red">#DD2853</color>
     <color name="second_color">#373737</color>
     <color name="shadow_color">#E3E4E6</color>
     <color name="ripple_color">#717171</color>
