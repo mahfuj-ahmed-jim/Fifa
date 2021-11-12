@@ -2,6 +2,7 @@ package com.ai.fifa.Authentication;
 
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -34,7 +35,7 @@ public class LogInFragment extends Fragment {
     private EditText numberEditText;
 
     // cross button for edit text
-    private LinearLayout crossButtonLayout;
+    private ConstraintLayout crossButtonLayout;
     private Button crossButton;
 
     // sign in
@@ -128,13 +129,6 @@ public class LogInFragment extends Fragment {
 
         // cross button
         crossButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                numberEditText.setText("");
-            }
-        });
-
-        crossButtonLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 numberEditText.setText("");
