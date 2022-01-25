@@ -1,8 +1,6 @@
 package com.ai.fifa.Authentication;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ai.fifa.Activities.IOnBackPressed;
+import com.ai.fifa.Database.Firebase.UserFirebase;
+import com.ai.fifa.Database.SharedPreference.UserSharePreference;
 import com.ai.fifa.Database.User.User;
 import com.ai.fifa.R;
 import com.chaos.view.PinView;
@@ -53,14 +53,10 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
     // user
     private User user = new User();
 
-    // shared preference
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor editor;
-
     // firebase
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack; // send otp
     private FirebaseAuth firebaseAuth;
-    private String verifyCode; // will hold otp to verify// Firebase
+    private String verifyCode; // will hold otp to verify
     private DatabaseReference databaseReference;
 
     // header
@@ -117,9 +113,6 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
         // firebase
         firebaseAuth = FirebaseAuth.getInstance(); // initialize firebase
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
-        //init shared Preference
-        preferences = getActivity().getSharedPreferences(String.valueOf(R.string.userInformation), MODE_PRIVATE);
 
         // header
         titleTextView = view.findViewById(R.id.textViewId_title);
@@ -436,19 +429,13 @@ public class Confirmationragment extends Fragment implements IOnBackPressed {
 
         user.setUserId(firebaseAuth.getCurrentUser().getUid()); // get firebase unique id
 
-        // add data to shared preference to start the apps from the main activity next time
-        preferences = getActivity().getSharedPreferences(String.valueOf(R.string.userData), Context.MODE_PRIVATE); // initialize the shared preference
-        editor = preferences.edit();
+        // set data in shared preference
+        UserSharePreference userSharePreference = new UserSharePreference(getActivity());
+        userSharePreference.setData(user);
 
-        editor.putString(String.valueOf(R.string.userId), user.getUserId()); // write first name
-        editor.putString(String.valueOf(R.string.firstName), user.getFirstName()); // write first name
-        editor.putString(String.valueOf(R.string.lastName), user.getLastName()); // write last name
-        editor.putString(String.valueOf(R.string.phoneNumber), user.getPhoneNumber()); // write last name
-        editor.putString(String.valueOf(R.string.password), user.getPassword()); // write password
-
-        editor.commit(); // write to shared preference
-
-        databaseReference.child(user.getUserId()).setValue(user); // set the object info in real time database
+        // upload data to firebase
+        UserFirebase userFirebase = new UserFirebase();
+        userFirebase.setData(user);
 
     }
 

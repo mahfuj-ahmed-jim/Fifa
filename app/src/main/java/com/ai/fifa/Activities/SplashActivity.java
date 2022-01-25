@@ -15,7 +15,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         Intent intent = new Intent(getApplicationContext(), PageActivity.class);
-        intent.putExtra(getApplicationContext().getString(R.string.activity), getApplicationContext().getString(R.string.logIn));
+        intent.putExtra(getApplicationContext().getString(R.string.activity), getApplicationContext().getString(R.string.LogInFragment));
         startActivity(intent);
 
     }

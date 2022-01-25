@@ -2,6 +2,7 @@ package com.ai.fifa.Authentication;
 
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -34,14 +35,14 @@ public class LogInFragment extends Fragment {
     private EditText numberEditText;
 
     // cross button for edit text
-    private LinearLayout crossButtonLayout;
+    private ConstraintLayout crossButtonLayout;
     private Button crossButton;
 
     // sign in
-    private TextView signInButton; // using textView as a button
+    private Button signInButton; // using textView as a button
     private Fragment selectedFragment = null;
     private static String FRAGMENT_TAG;
-    private Confirmationragment confirmationragment = new Confirmationragment();
+    private NameFragment nameFragment = new NameFragment();
 
     public LogInFragment() {
         // Required empty public constructor
@@ -83,7 +84,7 @@ public class LogInFragment extends Fragment {
         crossButton = view.findViewById(R.id.buttonId_numberCrossButton);
 
         // textView as button
-        signInButton = view.findViewById(R.id.textViewId_signIn);
+        signInButton = view.findViewById(R.id.buttonId_signIn);
 
         numberEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -115,9 +116,9 @@ public class LogInFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //set default fragment (welcome fragment)
-                selectedFragment = confirmationragment;
-                FRAGMENT_TAG = String.valueOf(R.string.confirmation);
+                // for next page
+                selectedFragment = nameFragment;
+                FRAGMENT_TAG = String.valueOf(R.string.NameFragment);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frameLayoutId, selectedFragment, FRAGMENT_TAG)
                         .addToBackStack(null)
@@ -128,13 +129,6 @@ public class LogInFragment extends Fragment {
 
         // cross button
         crossButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                numberEditText.setText("");
-            }
-        });
-
-        crossButtonLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 numberEditText.setText("");

@@ -43,11 +43,11 @@ public class PageActivity extends AppCompatActivity {
 
         String activity = getIntent().getStringExtra(getApplicationContext().getString(R.string.activity));
 
-        if(activity.equals(getApplicationContext().getString(R.string.logIn))){
+        if(activity.equals(getApplicationContext().getString(R.string.LogInFragment))){
 
             //set fragment (log in fragment)
             selectedFragment = logInFragment;
-            FRAGMENT_TAG = getApplicationContext().getString(R.string.logIn);
+            FRAGMENT_TAG = getApplicationContext().getString(R.string.LogInFragment);
 
         }
 
